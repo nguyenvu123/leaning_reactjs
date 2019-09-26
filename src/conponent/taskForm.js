@@ -1,35 +1,37 @@
-import React from 'react';
 
+import React, { Component } from 'react'
+class TaskForm extends Component {
 
-function taskForm() {
-  return (
-    <div className="task-form">
-        <form>
-            <div className="form-row align-items-center">
-                <div className="col-sm-3 my-1">
-                    <label className="sr-only">Name</label>
-                    <input type="text" className="form-control" id="inlineFormInputName" />
+    render() {
+
+        return (
+            <div className="panel panel-warning">
+                <div className="panel-heading">
+                    <h3 className="panel-title">Thêm Công Việc</h3>
                 </div>
-
-                <select>
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                </select>
-                <div className="col-auto my-1">
-                    <button type="submit" className="btn btn-primary">Lưu lại</button>
-                </div>
-                <div className="col-auto my-1">
-                    <button type="submit" className="btn btn-primary">Hủy bỏ</button>
+                <div className="panel-body">
+                    <form>
+                        <div className="form-group">
+                            <label>Tên :</label>
+                            <input type="text" className="form-control" />
+                        </div>
+                        <label>Trạng Thái :</label>
+                        <select className="form-control" required="required">
+                            <option value="1">Kích Hoạt</option>
+                            <option value="0">Ẩn</option>
+                        </select>
+                        <br/>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-warning">Thêm</button>&nbsp;
+                            <button type="submit" className="btn btn-danger">Hủy Bỏ</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
-    </div>
-  );
+
+
+        );
+    }
 }
 
-export default taskForm;
-
-
-
-
-
+export default TaskForm;
