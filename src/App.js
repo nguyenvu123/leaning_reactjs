@@ -11,7 +11,8 @@ class App extends Component {
     constructor (props) {
         super (props) 
          this.state = {
-             tasks_db : []
+            tasks_db : [],
+            isDisplayForm: true
          }
         
     }
@@ -58,13 +59,34 @@ class App extends Component {
         localStorage.setItem('tasks_db', JSON.stringify(tasks));
     }
 
-     rendumdstring() {
-         return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-     }
+    rendumdstring() {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    }
+
+    onToggleForm = () => {
+        this.setState ({ 
+            isDisplayForm: !this.state.isDisplayForm
+        })
+    }
+    taskFormOnSubmit = (data) => {
+        var task =  {
+            id: this.rendumdstring(),
+            name: data.name,
+            status: data.status
+        }
+        var { tasks_db } =  this.state;
+        tasks_db.push(task);
+        this.setState ({ 
+            tasks_db: tasks_db
+        });
+
+        localStorage.setItem('tasks_db', JSON.stringify(tasks_db)); //hàm lưu vào local
+        
+    }
 
     render() {
-        var { tasks_db } = this.state;
-    
+        var { tasks_db, isDisplayForm } = this.state;
+        var elemForm =  isDisplayForm ?  <Taskform taskForSB={this.taskFormOnSubmit} /> : '';    
 
         return (
             <div className="container">
@@ -76,12 +98,18 @@ class App extends Component {
                 <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 { /*TaskForm */ }
 
-                <Taskform />
+                { elemForm }
 
                 </div>
-                <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    <button type="button" className="btn btn-primary">
-                        <span className="fa fa-plus mr-5"></span>Thêm Công Việc
+                <div className={isDisplayForm ? 'col-lg-8': 'col-lg-12'}>
+                    <button type="button"
+                     className="btn btn-primary"
+                     onClick = { this.onToggleForm }
+                     >
+
+
+                        <span 
+                        className="fa fa-plus mr-5"></span>Thêm Công Việc
                     </button>
                     <button
                      type="button" 

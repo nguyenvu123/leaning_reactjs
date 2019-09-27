@@ -14,7 +14,7 @@ class TaskItem extends Component {
                 <td>{ index +1}</td>
                 <td>{ task.name }</td>
                 <td className="text-center">
-                    <span className="{ task.status }">
+                    <span className=" { task.status } ">
                     { task.status === true ? 'label label-success' : 'label label-danger' }
                     </span>
                 </td>
