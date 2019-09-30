@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Taskform from './conponent/TaskForm';
 import Control from './conponent/Control';
 import TaskList from './conponent/TaskList';
+import demo from './conponent/demo';
 
 
 
@@ -84,6 +85,42 @@ class App extends Component {
         
     }
 
+    onUpdateStatus = (id) => {
+      
+        var index = this.findIndex(id);
+        var { tasks_db } = this.state;
+        tasks_db[index].status = !tasks_db[index].status;
+        this.setState({
+            tasks_db: tasks_db
+        });
+        localStorage.setItem('tasks_db', JSON.stringify(tasks_db));
+    }
+
+    findIndex = (id) => {
+        var tasks =  this.state.tasks_db;
+        var index_check = '';
+        tasks.forEach((task, index) => {
+            if (task.id === id) {
+                 index_check = index;
+                
+            }
+        });
+        return index_check;
+    }
+
+    deleteItem = (id) => {
+        var index = this.findIndex(id);
+        var { tasks_db } = this.state;
+        tasks_db.splice(index, 1); 
+        this.setState({
+            tasks_db: tasks_db
+        });
+        localStorage.setItem('tasks_db', JSON.stringify(tasks_db));
+        
+
+
+    }
+
     render() {
         var { tasks_db, isDisplayForm } = this.state;
         var elemForm =  isDisplayForm ?  <Taskform taskForSB={this.taskFormOnSubmit} /> : '';    
@@ -127,7 +164,11 @@ class App extends Component {
                     <div className="row mt-15">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                           <TaskList tasks_db = { tasks_db }/>
+                           <TaskList tasks_db = { tasks_db }
+                            updateStatus = { this.onUpdateStatus }
+                            
+                            delete = {this.deleteItem}
+                            />
 
 
                         </div>
